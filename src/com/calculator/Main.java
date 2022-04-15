@@ -36,7 +36,7 @@ public class Main {
         //есть ли разделитель пробел
         boolean hasSpaces = input.contains(" ");
         if(!hasSpaces)
-            throw new CalculatorException("числа и символ арифмитической операции должен разделять пробел", 2);
+            throw new CalculatorException("строка не является математической операцией или числа и символ арифмитической операции должен разделять пробел", 2);
 
         //Содержит ли строка римские цыфры
         input =  input.toUpperCase();
@@ -45,8 +45,12 @@ public class Main {
 
         //разделяем на подстроки
         String[] expressionParts = input.split(" ");
-        if(expressionParts.length != 3 )
+        if(expressionParts.length > 3)
+            throw new CalculatorException("формат математической операции не удовлетворяет условию - два операнда и один оператор (+, -, /, *)", 0);
+        if(expressionParts.length < 3 )
             throw new CalculatorException("числа и символ арифмитической операции должен разделять пробел с обеих сторон от символа арифмитической операции или отсутствует символ арифмитической операции ", 3);
+        if( isRomanNumbers && (((expressionParts[0].contains("X") || expressionParts[0].contains("V") || expressionParts[0].contains("I")) && (isInt(expressionParts[2]))) || ((isInt(expressionParts[0])) && (expressionParts[2].contains("X") || expressionParts[2].contains("V") || expressionParts[2].contains("I")))))
+            throw new CalculatorException("используются одновременно разные системы счисления", 0);
 
 
         //определяем арифмитическую операцию
@@ -109,6 +113,8 @@ public class Main {
         if(!isRomanNumbers)
             resultString = Integer.toString(result);
         if(isRomanNumbers){
+            if(result < 0)
+                throw new CalculatorException("результат меньше 0, в римской системе нет отрицательных чисел", 10);
             if(result < 1)
                 throw new CalculatorException("результат вычисления меньше I", 9);
             resultString = convertNumToRoman(result);
@@ -128,5 +134,14 @@ public class Main {
         };
         final String s = roman[number];
         return s;
+    }
+
+    public static boolean isInt(String s){
+        try{
+            Integer.parseInt(s);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
