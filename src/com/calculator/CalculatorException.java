@@ -6,4 +6,5 @@ public class CalculatorException extends Exception{
     public CalculatorException(String exMessage, int exNumber){
         super(exMessage);
         number = exNumber;
+    }
 }
