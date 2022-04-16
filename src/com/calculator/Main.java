@@ -48,7 +48,7 @@ public class Main {
         if(expressionParts.length > 3)
             throw new CalculatorException("формат математической операции не удовлетворяет условию - два операнда и один оператор (+, -, /, *)", 3);
         if(expressionParts.length < 3 )
-            throw new CalculatorException("числа и символ арифмитической операции должен разделять пробел с обеих сторон от символа арифмитической операции или отсутствует символ арифмитической операции ", 4);
+            throw new CalculatorException("с обеих сторон от символа арифмитической операции или отсутствует символ арифмитической операции", 4);
         if( isRomanNumbers && (((expressionParts[0].contains("X") || expressionParts[0].contains("V") || expressionParts[0].contains("I")) && (isInt(expressionParts[2]))) || ((isInt(expressionParts[0])) && (expressionParts[2].contains("X") || expressionParts[2].contains("V") || expressionParts[2].contains("I")))))
             throw new CalculatorException("используются одновременно разные системы счисления", 5);
 
@@ -73,8 +73,16 @@ public class Main {
 
         //если числа римские
         if(isRomanNumbers){
-            a = RomanNumeral.romanToInt(expressionParts[0]);
-            b = RomanNumeral.romanToInt(expressionParts[2]);
+            try {
+                a = RomanNumeral.romanToInt(expressionParts[0]);
+            } catch (Exception ex) {
+                throw new CalculatorException("введеное число больше X", 13);
+            }
+            try {
+                b = RomanNumeral.romanToInt(expressionParts[2]);
+            } catch (Exception ex) {
+                throw new CalculatorException("введеное число больше X", 13);
+            }
             isNumbers = true;
         }
 
