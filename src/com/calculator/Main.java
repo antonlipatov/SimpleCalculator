@@ -68,7 +68,7 @@ public class Main {
                 isNumbers = false;
             }
             if(!isNumbers)
-                throw new CalculatorException("строка не содержит чисел.", 6);
+                throw new CalculatorException("один из операндов не чисело.", 6);
         }
 
         //если числа римские
@@ -76,12 +76,12 @@ public class Main {
             try {
                 a = RomanNumeral.romanToInt(expressionParts[0]);
             } catch (Exception ex) {
-                throw new CalculatorException("введеное число больше X", 13);
+                throw new CalculatorException("введеное число больше X", 12);
             }
             try {
                 b = RomanNumeral.romanToInt(expressionParts[2]);
             } catch (Exception ex) {
-                throw new CalculatorException("введеное число больше X", 13);
+                throw new CalculatorException("введеное число больше X", 12);
             }
             isNumbers = true;
         }
@@ -91,8 +91,6 @@ public class Main {
             if((a < 1 || a > 10) || ((b < 1 || b > 10))) {
                 if (!isRomanNumbers)
                     throw new CalculatorException("одно из введеных чисел не удовлетваряет условию - Число должно быть в диапазоне от 1 до 10 включительно." ,7);
-                if(isRomanNumbers)
-                    throw new CalculatorException("одно из введеных чисел не удовлетваряет условию - Число должно быть римским в диапазоне от I до X включительно.", 8);
             }
         }
 
@@ -111,10 +109,10 @@ public class Main {
                 if(b != 0)
                     result = a / b;
                 if(b == 0)
-                    throw new CalculatorException("деление на ноль", 9);
+                    throw new CalculatorException("деление на ноль", 8);
                 break;
             default:
-                throw new CalculatorException("символ арифмитической операции указан неверно", 10);
+                throw new CalculatorException("символ арифмитической операции указан неверно", 9);
         }
 
         //возвращаем результат
@@ -122,9 +120,9 @@ public class Main {
             resultString = Integer.toString(result);
         if(isRomanNumbers){
             if(result < 0)
-                throw new CalculatorException("результат меньше 0, в римской системе нет отрицательных чисел", 11);
+                throw new CalculatorException("результат меньше 0, в римской системе нет отрицательных чисел", 10);
             if(result < 1)
-                throw new CalculatorException("результат вычисления меньше I", 12);
+                throw new CalculatorException("результат вычисления меньше I", 11);
             resultString = convertNumToRoman(result);
         }
 
